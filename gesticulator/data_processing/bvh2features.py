@@ -44,24 +44,23 @@ def extract_joint_angles(bvh_dir, files, dest_dir, pipeline_dir, fps):
        ('jtsel', JointSelector(['Spine','Spine1','Spine2','Spine3','Neck','Neck1','Head','RightShoulder', 'RightArm', 'RightForeArm', 'RightHand', 'LeftShoulder', 'LeftArm', 'LeftForeArm', 'LeftHand'], include_root=True)),
        ('exp', MocapParameterizer('expmap')), 
        ('cnst', ConstantsRemover()),
-    #    ('np', Numpyfier())
+       ('np', Numpyfier())
     ])
 
     out_data = data_pipe.fit_transform(data_all)
+
+    print (out_data[0].values.columns)
 
     # the datapipe will append the mirrored files to the end
     assert len(out_data) == 2*len(files)
     
     jl.dump(data_pipe, os.path.join(pipeline_dir + 'data_pipe.sav'))
-        
+    
     fi=0
     for f in files:
         ff = os.path.join(dest_dir, f)
-        print("FILE:", ff)
-        df = pd.DataFrame(out_data[fi])
-        df.to_csv(ff + ".csv")
-        # np.savez(ff + ".npz", clips=out_data[fi])
-        # np.savez(ff + "_mirrored.npz", clips=out_data[len(files)+fi])
+        np.savez(ff + ".npz", clips=out_data[fi])
+        np.savez(ff + "_mirrored.npz", clips=out_data[len(files)+fi])
         fi=fi+1
 
 
@@ -70,11 +69,11 @@ if __name__ == '__main__':
 
     # Setup parameter parser
     parser = ArgumentParser(add_help=False)
-    parser.add_argument('--bvh_dir', '-orig', default="/Users/Famosi/Desktop/bvh_dir",
+    parser.add_argument('--bvh_dir', '-orig', default="/homes/sfaggi/Desktop/Thesis/Speech_driven_gesture_generation_with_autoencoder/dataset/motion",
                                 help="Path where original motion files (in BVH format) are stored")
-    parser.add_argument('--dest_dir', '-dest', default="/Users/Famosi/Desktop/Thesis/Code/gesticulator/dataset/dest_dir",
+    parser.add_argument('--dest_dir', '-dest', default="/homes/sfaggi/Desktop/Thesis/gesticulator/dataset/dest_dir",
                                 help="Path where extracted motion features will be stored")
-    parser.add_argument('--pipeline_dir', '-pipe', default="/Users/Famosi/Desktop/pipe_dir",
+    parser.add_argument('--pipeline_dir', '-pipe', default="/homes/sfaggi/Desktop/Thesis/gesticulator/dataset/pipe_dir",
                         help="Path where the motion data processing pipeline will be stored")
 
     params = parser.parse_args()
