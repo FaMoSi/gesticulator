@@ -49,8 +49,6 @@ def extract_joint_angles(bvh_dir, files, dest_dir, pipeline_dir, fps):
 
     out_data = data_pipe.fit_transform(data_all)
 
-    print (out_data[0].values.columns)
-
     # the datapipe will append the mirrored files to the end
     assert len(out_data) == 2*len(files)
     
