@@ -67,7 +67,7 @@ if __name__ == '__main__':
 
     # Setup parameter parser
     parser = ArgumentParser(add_help=False)
-    parser.add_argument('--bvh_dir', '-orig', default="/homes/sfaggi/Desktop/Thesis/Speech_driven_gesture_generation_with_autoencoder/dataset/motion/",
+    parser.add_argument('--bvh_dir', '-orig', default="/homes/sfaggi/Desktop/dataset/motion/",
                                 help="Path where original motion files (in BVH format) are stored")
     parser.add_argument('--dest_dir', '-dest', default="/homes/sfaggi/Desktop/Thesis/gesticulator/dataset/dest_dir/",
                                 help="Path where extracted motion features will be stored")
