@@ -60,7 +60,7 @@ def extract_joint_angles(bvh_dir, files, dest_dir, pipeline_dir, fps):
     for f in files:
         ff = os.path.join(dest_dir, f)
         np.savez(ff + ".npz", clips=out_data[fi])
-        np.savez(ff + "_mirrored.npz", clips=out_data[len(files)+fi])
+        # np.savez(ff + "_mirrored.npz", clips=out_data[len(files)+fi])
         fi=fi+1
 
 
