@@ -42,12 +42,14 @@ def extract_joint_angles(bvh_dir, files, dest_dir, pipeline_dir, fps):
        ('root', RootTransformer('hip_centric')),
        ('mir', Mirror(axis='X', append=True)),
        ('jtsel', JointSelector(['Spine','Spine1','Spine2','Spine3','Neck','Neck1','Head','RightShoulder', 'RightArm', 'RightForeArm', 'RightHand', 'LeftShoulder', 'LeftArm', 'LeftForeArm', 'LeftHand'], include_root=True)),
-       ('exp', MocapParameterizer('expmap')), 
+       ('exp', MocapParameterizer('euler')), 
        ('cnst', ConstantsRemover()),
        ('np', Numpyfier())
     ])
 
     out_data = data_pipe.fit_transform(data_all)
+
+    # print (out_data[0].values.columns)
 
     # the datapipe will append the mirrored files to the end
     assert len(out_data) == 2*len(files)
